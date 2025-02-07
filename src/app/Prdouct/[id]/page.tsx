@@ -1,21 +1,58 @@
-'use client'; // Required for React hooks in Next.js
+"use client"; // Required for React hooks in Next.js
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 
-const page = async ({ params: { id } }: { params: { id: number } }) => {
-  const query = `*[ _type == "product" && _id == $id]{
-    name,
-    "id": _id,
-    price,
-    description,
-    category,
-    "image": image.asset._ref
-  }[0]`;
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+}
 
-  const product: Product | null = await client.fetch(query, { id });
+const ProductPage = () => {
+  const { id } = useParams(); // Get `id` from URL params
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [cart, setCart] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (!id) return;
+      const query = `*[ _type == "product" && _id == $id][0] {
+        name,
+        "id": _id,
+        price,
+        description,
+        category,
+        "image": image.asset._ref
+      }`;
+
+      try {
+        const fetchedProduct = await client.fetch(query, { id });
+        setProduct(fetchedProduct);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <h1 className="text-2xl font-semibold text-gray-600">Loading...</h1>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -24,12 +61,6 @@ const page = async ({ params: { id } }: { params: { id: number } }) => {
       </div>
     );
   }
-
-  return <ProductPage product={product} />;
-};
-
-const ProductPage = ({ product }: { product: Product }) => {
-  const [cart, setCart] = useState<Product[]>([]);
 
   const addToCart = (product: Product) => {
     setCart((prevCart) => [...prevCart, product]);
@@ -120,4 +151,4 @@ const ProductPage = ({ product }: { product: Product }) => {
   );
 };
 
-export default page;
+export default ProductPage;
