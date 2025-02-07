@@ -50,9 +50,9 @@ function Contact() {
                     <h3 className="font-semibold text-xl ml-4">Address</h3>
                 </span>
                 <p className='ml-10'>
-                    238 5<sup>th</sup> SE Avenue,
-                    <br /> New York NY10000,
-                    <br /> United States
+                    58 street 5<sup>th</sup> Bahria town,
+                    <br /> Karachi,Sindh,
+                    <br /> Pakistan
                 </p>
             </div>
         </div>
@@ -62,8 +62,8 @@ function Contact() {
                     <FaPhoneAlt size={25} className="text-4xl text-primary" />
                     <h3 className="font-semibold ml-4 text-lg">Phone</h3>
                 </span>
-                <p className='ml-10'>Mobile : +(84)546-6789</p>
-                <p className='ml-10'>Hotline : +(84)546-6789</p>
+                <p className='ml-10'>Mobile : +(92)334-2834096</p>
+                <p className='ml-10'>Hotline : +(92)334-2834096</p>
             </div>
         </div>
         <div className="flex items-center space-x-4 my-6">

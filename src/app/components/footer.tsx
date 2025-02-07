@@ -80,7 +80,7 @@ function Footer() {
 
       {/* Footer Bottom */}
       <hr className="my-6 border-gray-300" />
-      <p className="text-center text-gray-600">2022 Meubel House. All rights reserved.</p>
+      <p className="text-center text-gray-600">2025 Muhammad Owais Khan. All rights reserved.</p>
     </div>
   );
 }

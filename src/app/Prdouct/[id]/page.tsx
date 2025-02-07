@@ -5,7 +5,7 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 
-const page = async ({ params: { id } }: { params: { id: string } }) => {
+const page = async ({ params: { id } }: { params: { id: number } }) => {
   const query = `*[ _type == "product" && _id == $id]{
     name,
     "id": _id,
